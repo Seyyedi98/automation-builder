@@ -5,6 +5,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { UserButton } from "@clerk/nextjs";
 import { Book, Headphones, Search } from "lucide-react";
 import React from "react";
 
@@ -48,7 +49,7 @@ const InfoBar = () => {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      {/* <UserButton /> */}
+      <UserButton />
     </div>
   );
 };
