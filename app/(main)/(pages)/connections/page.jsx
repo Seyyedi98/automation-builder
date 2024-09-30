@@ -1,6 +1,10 @@
+import { CONNECTIONS } from "@/lib/constant";
 import React from "react";
+import ConnectionCard from "./_components/Connection-card";
 
 const Connections = () => {
+  const connections = {};
+
   return (
     <div className="relative flex flex-col gap-4">
       <h1
@@ -13,6 +17,16 @@ const Connections = () => {
         <section className="flex flex-col gap-4 p-6 text-muted-foreground">
           Connect all ypur apps directly from here. You may need to connect
           these apps regularly to refresh verifivation
+          {CONNECTIONS.map((connection) => (
+            <ConnectionCard
+              key={connection.title}
+              description={connection.description}
+              title={connection.title}
+              icon={connection.image}
+              type={connection.title}
+              connected={connections}
+            />
+          ))}
         </section>
       </div>
     </div>
