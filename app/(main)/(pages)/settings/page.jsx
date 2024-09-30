@@ -1,8 +1,29 @@
 import ProfileForm from "@/app/components/forms/profile-form";
 import React from "react";
 import ProfilePicture from "./_components/Profile-Picture";
+import { currentUser } from "@clerk/nextjs/server";
+import prisma from "@/lib/client";
 
-const Settings = () => {
+const Settings = async () => {
+  const authUser = await currentUser();
+  if (!authUser) return null;
+  const user = await prisma.user.findUnique({
+    where: { clerkId: authUser.id },
+  });
+
+  const updateUserInfo = async (name) => {
+    "use server";
+    const updateUser = await prisma.user.update({
+      where: {
+        clerkId: authUser.id,
+      },
+      data: {
+        name,
+      },
+    });
+    return updateUser;
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <h1
@@ -19,7 +40,7 @@ const Settings = () => {
           </p>
         </div>
         <ProfilePicture onDelete={() => {}}></ProfilePicture>
-        <ProfileForm />
+        <ProfileForm user={user} onUpdate={updateUserInfo} />
       </div>
     </div>
   );

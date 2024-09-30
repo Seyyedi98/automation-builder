@@ -10,10 +10,20 @@ const UploadCareButton = (onUpload) => {
 
   useEffect(() => {
     const handleUpload = async (e) => {
-      const file = await onUpload(e.detail.cdnurl);
-      if (file) {
-        router.refresh();
-      }
+      const result = await uploadFile(fileData, {
+        publicKey: "1a25f8fa59e90c064f39",
+        store: "auto",
+        metadata: {
+          subsystem: "js-client",
+        },
+      });
+
+      console.log(result.uuid);
+
+      // const file = await onUpload(e.detail.cdnurl);
+      // if (file) {
+      //   router.refresh();
+      // }
     };
   }, []);
 

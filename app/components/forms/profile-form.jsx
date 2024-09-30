@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EditUserProfileSchema } from "@/lib/types";
@@ -15,21 +15,34 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
-const ProfileForm = () => {
+const ProfileForm = ({ user, onUpdate }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm({
     mode: "onChange",
     resolver: zodResolver(EditUserProfileSchema),
     defaultValues: {
-      name: "",
-      email: "",
+      name: user.name,
+      email: user.email,
     },
   });
 
+  const handleSubmit = async (values) => {
+    setIsLoading(true);
+    await onUpdate(values.name);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    form.reset({ name: user.name, email: user.email });
+  }, [user]);
+
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-6" onSubmit={() => {}}>
+      <form
+        className="flex flex-col gap-6"
+        onSubmit={form.handleSubmit(handleSubmit)}
+      >
         <FormField
           disabled={isLoading}
           control={form.control}
@@ -38,7 +51,7 @@ const ProfileForm = () => {
             <FormItem>
               <FormLabel className="text-lg">User full name</FormLabel>
               <FormControl>
-                <Input placeholder="Name" {...field} />
+                <Input {...field} placeholder="Name" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -52,7 +65,7 @@ const ProfileForm = () => {
             <FormItem>
               <FormLabel className="text-lg">User Email</FormLabel>
               <FormControl>
-                <Input placeholder="Email" type="email" disabled {...field} />
+                <Input {...field} placeholder="Email" type="email" disabled />
               </FormControl>
               <FormMessage />
             </FormItem>
