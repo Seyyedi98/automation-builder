@@ -1,5 +1,5 @@
-import React from "react";
 import WorkflowButton from "./_components/Workflow-button";
+import WorkflowsList from "./_components/workflows";
 
 const Workflows = () => {
   return (
@@ -11,6 +11,7 @@ const Workflows = () => {
         Workflows
         <WorkflowButton />
       </h1>
+      <WorkflowsList />
     </div>
   );
 };
