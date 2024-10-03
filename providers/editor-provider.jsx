@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  Dispatch,
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
+
 const InitialEditorStates = {
   elements: [],
   selectedNode: {
@@ -83,3 +91,33 @@ const editorReducer = (state, action) => {
       return state;
   }
 };
+
+export const EditorContext = createContext({
+  state: initialState,
+  dispatch: () => undefined,
+});
+
+const EditorProvider = (props) => {
+  const [state, dispatch] = useReducer(editorReducer, initialState);
+
+  return (
+    <EditorContext.Provider
+      value={{
+        state,
+        dispatch,
+      }}
+    >
+      {props.children}
+    </EditorContext.Provider>
+  );
+};
+
+export const useEditor = () => {
+  const context = useContext(EditorContext);
+  if (!context) {
+    throw new Error("useEditor Hook must be used within the editor Provider");
+  }
+  return context;
+};
+
+export default EditorProvider;
