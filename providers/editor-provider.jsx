@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Dispatch,
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-} from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 const InitialEditorStates = {
   elements: [],
@@ -45,7 +39,7 @@ const editorReducer = (state, action) => {
 
         const redoState = {
           ...state,
-          editor,
+          editor: nextEditorState,
           history: { ...state.history, currentIndex: nextIndex },
         };
         return redoState;
@@ -74,7 +68,7 @@ const editorReducer = (state, action) => {
         editor: {
           ...state.editor,
           elements: action.payload.elements || InitialEditorStates.elements,
-          edge: action.payload.edges,
+          edges: action.payload.edges,
         },
       };
 
