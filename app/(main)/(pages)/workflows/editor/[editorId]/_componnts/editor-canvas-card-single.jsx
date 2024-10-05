@@ -1,22 +1,24 @@
 import { Position, useNodeId } from "@xyflow/react";
-import React, { useMemo } from "react";
-import { useEditor } from "../../../../../../../providers/editor-provider";
-import EditorCanvasIconHelper from "./editor-canvas-card-icon";
-import CustomHandle from "./custon-handle";
+import clsx from "clsx";
+import { useMemo } from "react";
+import { Badge } from "../../../../../../../components/ui/badge";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+} from "../../../../../../../components/ui/card";
+import { useEditor } from "../../../../../../../providers/editor-provider";
+import CustomHandle from "./custon-handle";
+import EditorCanvasIconHelper from "./editor-canvas-card-icon";
+
 const EditorCanvasCardSingle = ({ data }) => {
   const { dispatch, state } = useEditor();
   const nodeId = useNodeId();
-
   const logo = useMemo(() => {
     return <EditorCanvasIconHelper type={data.type} />;
   }, [data]);
+
   return (
     <>
       {/* Each node will have a handle. we want to have only one trigger for google drive  */}
@@ -31,12 +33,12 @@ const EditorCanvasCardSingle = ({ data }) => {
       <Card
         onClick={(e) => {
           e.stopPropagation();
-          const value = state.editor.elements.find((n) => n.id === nodeId);
-          if (value)
+          const val = state.editor.elements.find((n) => n.id === nodeId);
+          if (val)
             dispatch({
               type: "SELECTED_ELEMENT",
               payload: {
-                element: value,
+                element: val,
               },
             });
         }}
@@ -66,6 +68,7 @@ const EditorCanvasCardSingle = ({ data }) => {
           })}
         ></div>
       </Card>
+      <CustomHandle type="source" position={Position.Bottom} id="a" />
     </>
   );
 };

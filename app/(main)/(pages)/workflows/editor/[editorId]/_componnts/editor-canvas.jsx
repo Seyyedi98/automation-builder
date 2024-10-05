@@ -1,28 +1,39 @@
 "use client";
 
-import { useEditor } from "@/providers/editor-provider";
-import "@xyflow/react/dist/style.css";
-import { usePathname } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
 import {
-  ResizablePanelGroup,
   ResizableHandle,
   ResizablePanel,
+  ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { Background, Controls, MiniMap, ReactFlow } from "@xyflow/react";
-import EditorCanvasCardSingle from "./editor-canvas-card-single";
+import {
+  addEdge,
+  applyEdgeChanges,
+  applyNodeChanges,
+  Background,
+  Controls,
+  MiniMap,
+  ReactFlow,
+} from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { v4 } from "uuid";
+import { useEditor } from "../../../../../../../providers/editor-provider";
+import EditorCanvasCardSingle from "./editor-canvas-card-single";
+import FlowInstance from "./flow-instance";
+import EditorCanvasSidebar from "./editor-canvas-sidebar";
+import { EditorCanvasDefaultCardTypes } from "@/lib/constant";
 
 const initialNodes = [];
 const initialEdges = [];
 
 const EditorCanvas = (props) => {
   const { dispatch, state } = useEditor();
-
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const [isWorkFlowLoading, setIsWorkFlowLoading] = useState(false);
   const [reactFlowInstance, setReactFlowInstance] = useState();
+  const pathname = usePathname();
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -84,6 +95,7 @@ const EditorCanvas = (props) => {
           type: type,
         },
       };
+
       setNodes((nds) => nds.concat(newNode));
     },
     [reactFlowInstance, state]
@@ -110,6 +122,11 @@ const EditorCanvas = (props) => {
     });
   };
 
+  // load data to show nodes
+  useEffect(() => {
+    dispatch({ type: "LOAD_DATA", payload: { edges, elements: nodes } });
+  }, [nodes, edges]);
+
   const nodeTypes = useMemo(
     () => ({
       Action: EditorCanvasCardSingle,
@@ -128,7 +145,6 @@ const EditorCanvas = (props) => {
     []
   );
 
-  const pathname = usePathname();
   return (
     <ResizablePanelGroup direction="horizontal" className="">
       <ResizablePanel defaultSize={70}>

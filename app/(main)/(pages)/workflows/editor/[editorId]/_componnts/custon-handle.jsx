@@ -1,13 +1,13 @@
 import React from "react";
-import { useEditor } from "../../../../../../../providers/editor-provider";
 import { Handle, useStore } from "@xyflow/react";
+import { useEditor } from "@/providers/editor-provider";
 
 const selector = (s) => {
   nodeInternals: s.nodeInternals;
   edges: s.edges;
 };
 
-const CustomHandle = () => {
+const CustomHandle = (props) => {
   const { state } = useEditor();
 
   // each hadle can have one connector. Here we check if nodes can accept connection
@@ -26,7 +26,6 @@ const CustomHandle = () => {
           (edge) => edge.target === e.target
         ).length;
 
-        // can connect connection
         if (targetFromHandleInState === 1) return false;
         if (sourceNode?.type === "Condition") return true;
         if (sourcesFromHandleInState < 1) return true;
