@@ -183,7 +183,7 @@ const EditorCanvas = (props) => {
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
                 onInit={setReactFlowInstance}
-                fitView
+                fitView={false}
                 onClick={handleClickCanvas}
                 nodeTypes={nodeTypes}
               >
@@ -202,7 +202,7 @@ const EditorCanvas = (props) => {
       </ResizablePanel>
       <ResizableHandle />
 
-      <ResizablePanel defaultSize={40} className="relative sm:block">
+      <ResizablePanel defaultSize={30} className="relative sm:block">
         {isWorkFlowLoading ? (
           <div className="absolute flex h-full w-full items-center justify-center">
             <svg
