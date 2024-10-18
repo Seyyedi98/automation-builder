@@ -27,11 +27,15 @@ const EditorCanvasSidebar = ({ nodes }) => {
         </TabsList>
         <Separator />
         <TabsContent value="actions" className="flex flex-col gap-4 p-4">
+          {/* {Object.entries(EditorCanvasDefaultCardTypes).map(([_, cardType]) => {
+            console.log(cardType);
+          })} */}
+
           {Object.entries(EditorCanvasDefaultCardTypes)
             .filter(
               ([_, cardType]) =>
-                (!nodes.length && cardType.type === "Trigger") ||
-                (nodes.length && cardType.type === "Action")
+                (!nodes.length && cardType.type === "Trigger") || // If no nodes, show existing trigger type nodes (GDrive and Action)
+                (nodes.length && cardType.type === "Action") // If there is nodes, show Action type nodes
             )
             .map(([cardKey, cardValue]) => (
               <Card

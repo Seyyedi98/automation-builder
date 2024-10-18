@@ -1,20 +1,21 @@
 import { Position, useNodeId } from "@xyflow/react";
 import clsx from "clsx";
 import { useMemo } from "react";
-import { Badge } from "../../../../../../../components/ui/badge";
+import { useEditor } from "../../../../../../../providers/editor-provider";
+import CustomHandle from "./custon-handle";
+import EditorCanvasIconHelper from "./editor-canvas-card-icon";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../../../../../../components/ui/card";
-import { useEditor } from "../../../../../../../providers/editor-provider";
-import CustomHandle from "./custon-handle";
-import EditorCanvasIconHelper from "./editor-canvas-card-icon";
+} from "@/components/ui/card";
 
 const EditorCanvasCardSingle = ({ data }) => {
   const { dispatch, state } = useEditor();
   const nodeId = useNodeId();
+
   const logo = useMemo(() => {
     return <EditorCanvasIconHelper type={data.type} />;
   }, [data]);
@@ -49,10 +50,10 @@ const EditorCanvasCardSingle = ({ data }) => {
           <div>
             <CardTitle className="text-md">{data.title}</CardTitle>
             <CardDescription>
-              <p className="text-xs text-muted-foreground/50">
+              <span className="text-xs text-muted-foreground/50">
                 <b className="text-muted-foreground/80">ID: </b>
                 {nodeId}
-              </p>
+              </span>
               <p>{data.description}</p>
             </CardDescription>
           </div>

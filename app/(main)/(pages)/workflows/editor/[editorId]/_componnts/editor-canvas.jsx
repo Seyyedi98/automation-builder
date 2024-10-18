@@ -5,6 +5,8 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { EditorCanvasDefaultCardTypes } from "@/lib/constant";
+import { useEditor } from "@/providers/editor-provider";
 import {
   addEdge,
   applyEdgeChanges,
@@ -18,14 +20,13 @@ import "@xyflow/react/dist/style.css";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { v4 } from "uuid";
-import { useEditor } from "../../../../../../../providers/editor-provider";
 import EditorCanvasCardSingle from "./editor-canvas-card-single";
-import FlowInstance from "./flow-instance";
 import EditorCanvasSidebar from "./editor-canvas-sidebar";
-import { EditorCanvasDefaultCardTypes } from "@/lib/constant";
+import FlowInstance from "./flow-instance";
 
 const initialNodes = [];
 const initialEdges = [];
+const proOptions = { hideAttribution: true };
 
 const EditorCanvas = (props) => {
   const { dispatch, state } = useEditor();
@@ -36,6 +37,7 @@ const EditorCanvas = (props) => {
   const pathname = usePathname();
 
   const onDragOver = useCallback((event) => {
+    // Dragging node on workflow
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   }, []);
@@ -58,9 +60,11 @@ const EditorCanvas = (props) => {
   );
 
   const onDrop = useCallback(
+    // Drop node on workflow
     (event) => {
       event.preventDefault();
 
+      // Get node neme, like slack or email
       const type = event.dataTransfer.getData("application/reactflow");
 
       if (typeof type === "undefined" || !type) {
@@ -186,6 +190,7 @@ const EditorCanvas = (props) => {
                 fitView={false}
                 onClick={handleClickCanvas}
                 nodeTypes={nodeTypes}
+                proOptions={proOptions}
               >
                 <Controls position="top-left" />
                 <MiniMap
