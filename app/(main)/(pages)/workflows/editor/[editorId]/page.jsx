@@ -3,7 +3,7 @@ import EditorProvider from "@/providers/editor-provider";
 import React from "react";
 import EditorCanvas from "./_componnts/editor-canvas";
 
-const Page = () => {
+const Page = async () => {
   return (
     <div className="h-full">
       <EditorProvider>
