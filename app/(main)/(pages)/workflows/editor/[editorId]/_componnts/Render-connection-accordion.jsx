@@ -22,6 +22,7 @@ const RenderConnectionAccordion = ({ connection, state }) => {
     useFuzzieStore();
 
   const connectionData = nodeConnection[connectionKey];
+
   const isConnected =
     alwaysTrue ||
     (nodeConnection[connectionKey] &&

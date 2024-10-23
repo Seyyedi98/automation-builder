@@ -11,6 +11,7 @@ import { nodeMapper } from "@/lib/types";
 import React from "react";
 import GoogleFileDetails from "./google-file-details";
 import GoogleDriveFiles from "./google-drive-files";
+import ActionButton from "./action-button";
 
 const ContentBasedOnTitle = ({
   nodeConnection,
@@ -61,7 +62,6 @@ const ContentBasedOnTitle = ({
               }
             />
           ) : null}
-
           {JSON.stringify(file) !== "{}" && title !== "Google Drive" && (
             <Card className="w-full">
               <CardContent className="px-2 py-3">
@@ -78,13 +78,21 @@ const ContentBasedOnTitle = ({
               </CardContent>
             </Card>
           )}
-          {title === "Google Drive" && (
+          {title === "Google Drive" && <GoogleDriveFiles />}
+          {/* {title === "Google Drive" && (
             <GoogleDriveFiles
               nodeConnection={nodeConnection}
               googleFile={file}
               setGoogleFile={setFile}
             />
-          )}
+          )} */}
+
+          <ActionButton
+            currentService={title}
+            nodeConnection={nodeConnection}
+            channels={selectedSlackChannels}
+            setChannels={setSelectedSlackChannels}
+          />
         </div>
       </Card>
     </AccordionContent>
