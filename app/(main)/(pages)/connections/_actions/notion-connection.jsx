@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/client";
 import { currentUser } from "@clerk/nextjs";
+import { Client } from "@notionhq/client";
 
 export const onNotionConnect = async (
   access_token,
@@ -48,54 +49,54 @@ export const onNotionConnect = async (
     }
   }
 };
-// export const getNotionConnection = async () => {
-//   const user = await currentUser();
-//   if (user) {
-//     const connection = await prisma.notion.findFirst({
-//       where: {
-//         userId: user.id,
-//       },
-//     });
-//     if (connection) {
-//       return connection;
-//     }
-//   }
-// };
+export const getNotionConnection = async () => {
+  const user = await currentUser();
+  if (user) {
+    const connection = await prisma.notion.findFirst({
+      where: {
+        userId: user.id,
+      },
+    });
+    if (connection) {
+      return connection;
+    }
+  }
+};
 
-// export const getNotionDatabase = async (databaseId, accessToken) => {
-//   const notion = new Client({
-//     auth: accessToken,
-//   });
-//   const response = await notion.databases.retrieve({ database_id: databaseId });
-//   return response;
-// };
+export const getNotionDatabase = async (databaseId, accessToken) => {
+  const notion = new Client({
+    auth: accessToken,
+  });
+  const response = await notion.databases.retrieve({ database_id: databaseId });
+  return response;
+};
 
-// export const onCreateNewPageInDatabase = async (
-//   databaseId,
-//   accessToken,
-//   content
-// ) => {
-//   const notion = new Client({
-//     auth: accessToken,
-//   });
+export const onCreateNewPageInDatabase = async (
+  databaseId,
+  accessToken,
+  content
+) => {
+  const notion = new Client({
+    auth: accessToken,
+  });
 
-//   console.log(databaseId);
-//   const response = await notion.pages.create({
-//     parent: {
-//       type: "database_id",
-//       database_id: databaseId,
-//     },
-//     properties: {
-//       name: [
-//         {
-//           text: {
-//             content: content,
-//           },
-//         },
-//       ],
-//     },
-//   });
-//   if (response) {
-//     return response;
-//   }
-// };
+  console.log(databaseId);
+  const response = await notion.pages.create({
+    parent: {
+      type: "database_id",
+      database_id: databaseId,
+    },
+    properties: {
+      name: [
+        {
+          text: {
+            content: content,
+          },
+        },
+      ],
+    },
+  });
+  if (response) {
+    return response;
+  }
+};

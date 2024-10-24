@@ -6,7 +6,23 @@ const ActionButton = ({
   channels,
   setChannels,
 }) => {
-  return <div>ActionButton</div>;
+  const pathName = usePathName();
+
+  const renderActionButton = () => {
+    switch (currentService) {
+      case "Discord":
+        break;
+
+      case "Notion":
+        break;
+
+      case "Slack":
+        break;
+
+      default:
+        break;
+    }
+  };
 };
 
 export default ActionButton;

@@ -40,39 +40,39 @@ export const onSlackConnect = async (
   }
 };
 
-// export const getSlackConnection = async () => {
-//   const user = await currentUser();
-//   if (user) {
-//     return await prisma.slack.findFirst({
-//       where: { userId: user.id },
-//     });
-//   }
-//   return null;
-// };
+export const getSlackConnection = async () => {
+  const user = await currentUser();
+  if (user) {
+    return await prisma.slack.findFirst({
+      where: { userId: user.id },
+    });
+  }
+  return null;
+};
 
-// export const listBotChannels = async (slackAccessToken) => {
-//   const url = `https://slack.com/api/conversations.list?${new URLSearchParams({
-//     types: "public_channel,private_channel",
-//     limit: "200",
-//   })}`;
+export const listBotChannels = async (slackAccessToken) => {
+  const url = `https://slack.com/api/conversations.list?${new URLSearchParams({
+    types: "public_channel,private_channel",
+    limit: "200",
+  })}`;
 
-//   try {
-//     const { data } = await axios.get(url, {
-//       headers: { Authorization: `Bearer ${slackAccessToken}` },
-//     });
+  try {
+    const { data } = await axios.get(url, {
+      headers: { Authorization: `Bearer ${slackAccessToken}` },
+    });
 
-//     if (!data.ok) throw new Error(data.error);
+    if (!data.ok) throw new Error(data.error);
 
-//     if (!data?.channels?.length) return [];
+    if (!data?.channels?.length) return [];
 
-//     return data.channels
-//       .filter((ch) => ch.is_member)
-//       .map((ch) => ({ label: ch.name, value: ch.id }));
-//   } catch (error) {
-//     console.error("Error listing bot channels:", error.message);
-//     throw error;
-//   }
-// };
+    return data.channels
+      .filter((ch) => ch.is_member)
+      .map((ch) => ({ label: ch.name, value: ch.id }));
+  } catch (error) {
+    console.error("Error listing bot channels:", error.message);
+    throw error;
+  }
+};
 
 // const postMessageInSlackChannel = async (
 //   slackAccessToken,

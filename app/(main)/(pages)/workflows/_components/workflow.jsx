@@ -11,9 +11,16 @@ import { Switch } from "@/components/ui/switch";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { onFlowPublish } from "../editor/[editorId]/actions/workfow-connections";
 
 const Workflow = ({ name, description, id, publish }) => {
-  const onPublishFlow = () => {};
+  const onPublishFlow = async (event) => {
+    const response = await onFlowPublish(
+      id,
+      event.target.ariaChecked === "false"
+    );
+    if (response) toast.message(reponse);
+  };
 
   return (
     <Card className="flex w-full items-center justify-between">
@@ -49,10 +56,9 @@ const Workflow = ({ name, description, id, publish }) => {
         </Link>
       </CardHeader>
       <div className="flex flex-col itemce gap-2 p-4">
-        <Label
-          htmlFor="airplane-mode"
-          className="text-muted-foreground"
-        ></Label>
+        <Label htmlFor="airplane-mode" className="text-muted-foreground">
+          {publish ? "On" : "Off"}
+        </Label>
         <Switch
           id="airplane-mode"
           onClick={onPublishFlow}

@@ -2,8 +2,11 @@ import Link from "next/link";
 import Logo from "./Logo";
 import { MenuIcon } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 
 const Navbar = async () => {
+  const user = await currentUser();
+
   return (
     <header
       className="fixed right-0 left-0 top-0 py-4 px-4 bg-black/40 backdrop-blur-lg
@@ -51,11 +54,10 @@ const Navbar = async () => {
            rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white
             backdrop-blur-3xl"
           >
-            {/* Add user later */}
-            {true ? "Dashboard" : "Get Started"}
+            {user ? "Dashboard" : "Get Started"}
           </span>
         </Link>
-        <UserButton />
+        {user ? <UserButton afterSignOutUrl="/" /> : null}
         <MenuIcon className="md:hidden" />
       </aside>
     </header>

@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/client";
 
-export const getUserData = async (id: string) => {
+export const getUserData = async (id) => {
   const user_info = await prisma.user.findUnique({
     where: {
       clerkId: id,

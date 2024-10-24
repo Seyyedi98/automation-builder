@@ -1,30 +1,52 @@
 "use client";
 
-import { useNodeConnections } from "@/providers/connections-provider";
-import { useEditor } from "@/providers/editor-provider";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Separator } from "@/components/ui/separator";
-import { CONNECTIONS, EditorCanvasDefaultCardTypes } from "@/lib/constant";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import EditorCanvasIconHelper from "./editor-canvas-card-icon";
-import { onDragStart } from "@/lib/editor-utils";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CONNECTIONS, EditorCanvasDefaultCardTypes } from "@/lib/constant";
+import {
+  fetchBotSlackChannels,
+  onConnections,
+  onDragStart,
+} from "@/lib/editor-utils";
+import { useNodeConnections } from "@/providers/connections-provider";
+import { useEditor } from "@/providers/editor-provider";
+import { useFuzzieStore } from "@/store";
+import { useEffect } from "react";
+import EditorCanvasIconHelper from "./editor-canvas-card-icon";
 import RenderConnectionAccordion from "./Render-connection-accordion";
 import RenderOutputAccordion from "./render-output-accordion";
 
 const EditorCanvasSidebar = ({ nodes }) => {
   const { state } = useEditor();
   const { nodeConnection } = useNodeConnections();
+  const { googleFile, slackChannels } = useFuzzieStore();
+
+  useEffect(() => {
+    if (state) {
+      onConnections(nodeConnection, state, googleFile);
+    }
+  }, [state]);
+
+  useEffect(() => {
+    if (nodeConnection.slackNode.slackAccssToken) {
+      fetchBotSlackChannels(
+        nodeConnection.slackNode.slackAccssToken,
+        setSlackChannels
+      );
+    }
+  }, [nodeConnection]);
 
   return (
     <aside>
