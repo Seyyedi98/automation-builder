@@ -18,7 +18,8 @@ export const onCreateNodesEdges = async (flowId, nodes, edges, flowPath) => {
 };
 
 export const onFlowPublish = async (workflowId, state) => {
-  console.log(state);
+  // console.log(workflowId, state);
+
   const published = await prisma.workflows.update({
     where: {
       id: workflowId,
