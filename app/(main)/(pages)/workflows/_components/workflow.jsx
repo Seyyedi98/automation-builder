@@ -11,7 +11,8 @@ import { Switch } from "@/components/ui/switch";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { onFlowPublish } from "../editor/[editorId]/actions/workfow-connections";
+import { onFlowPublish } from "../editor/[editorId]/actions/workflow-connections";
+import { toast } from "sonner";
 
 const Workflow = ({ name, description, id, publish }) => {
   const onPublishFlow = async (event) => {
@@ -19,7 +20,7 @@ const Workflow = ({ name, description, id, publish }) => {
       id,
       event.target.ariaChecked === "false"
     );
-    if (response) toast.message(reponse);
+    if (response) toast.message(response);
   };
 
   return (

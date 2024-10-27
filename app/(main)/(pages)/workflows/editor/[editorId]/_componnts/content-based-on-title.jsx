@@ -12,6 +12,7 @@ import React from "react";
 import GoogleFileDetails from "./google-file-details";
 import GoogleDriveFiles from "./google-drive-files";
 import ActionButton from "./action-button";
+import { onContentChange } from "@/lib/editor-utils";
 
 const ContentBasedOnTitle = ({
   nodeConnection,
@@ -53,7 +54,7 @@ const ContentBasedOnTitle = ({
         )}
         <div className="flex flex-col gap-3 px-6 py-3 pb-20">
           <p>{title === "Notion" ? "Values to be stored" : "Message"}</p>
-          {title === "Discord" || title === "slack" ? (
+          {title === "Discord" || title === "Slack" ? (
             <Input
               type="text"
               value={nodeConnectionType.content}
@@ -79,14 +80,6 @@ const ContentBasedOnTitle = ({
             </Card>
           )}
           {title === "Google Drive" && <GoogleDriveFiles />}
-          {/* {title === "Google Drive" && (
-            <GoogleDriveFiles
-              nodeConnection={nodeConnection}
-              googleFile={file}
-              setGoogleFile={setFile}
-            />
-          )} */}
-
           <ActionButton
             currentService={title}
             nodeConnection={nodeConnection}

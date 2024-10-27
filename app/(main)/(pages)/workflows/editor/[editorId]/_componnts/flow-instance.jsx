@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import {
   onCreateNodesEdges,
   onFlowPublish,
-} from "../actions/workfow-connections";
+} from "../actions/workflow-connections";
 import { toast } from "sonner";
 
 const FlowInstance = ({ children, edges, nodes }) => {

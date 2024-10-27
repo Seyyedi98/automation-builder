@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/client";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import axios from "axios";
 
 export const onSlackConnect = async (
@@ -50,7 +50,7 @@ export const getSlackConnection = async () => {
   return null;
 };
 
-export const listBotChannels = async (slackAccessToken) => {
+export async function listBotChannels(slackAccessToken) {
   const url = `https://slack.com/api/conversations.list?${new URLSearchParams({
     types: "public_channel,private_channel",
     limit: "200",
@@ -67,14 +67,16 @@ export const listBotChannels = async (slackAccessToken) => {
 
     return data.channels
       .filter((ch) => ch.is_member)
-      .map((ch) => ({ label: ch.name, value: ch.id }));
+      .map((ch) => {
+        return { label: ch.name, value: ch.id };
+      });
   } catch (error) {
     console.error("Error listing bot channels:", error.message);
     throw error;
   }
-};
+}
 
-export const postMessageInSlackChannel = async (
+const postMessageInSlackChannel = async (
   slackAccessToken,
   slackChannel,
   content

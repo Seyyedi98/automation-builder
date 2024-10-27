@@ -31,7 +31,7 @@ import RenderOutputAccordion from "./render-output-accordion";
 const EditorCanvasSidebar = ({ nodes }) => {
   const { state } = useEditor();
   const { nodeConnection } = useNodeConnections();
-  const { googleFile, slackChannels } = useFuzzieStore();
+  const { googleFile, setSlackChannels } = useFuzzieStore();
 
   useEffect(() => {
     if (state) {
@@ -40,9 +40,9 @@ const EditorCanvasSidebar = ({ nodes }) => {
   }, [state]);
 
   useEffect(() => {
-    if (nodeConnection.slackNode.slackAccssToken) {
+    if (nodeConnection.slackNode.slackAccessToken) {
       fetchBotSlackChannels(
-        nodeConnection.slackNode.slackAccssToken,
+        nodeConnection.slackNode.slackAccessToken,
         setSlackChannels
       );
     }

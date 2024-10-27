@@ -8,6 +8,7 @@ import { Plus } from "lucide-react";
 
 const WorkflowButton = () => {
   const { setOpen, setClose } = useModal();
+
   const handleClick = () => {
     setOpen(
       <CutomModal

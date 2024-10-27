@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/client";
+import { currentUser } from "@clerk/nextjs/server";
 
 export const onCreateNodesEdges = async (flowId, nodes, edges, flowPath) => {
   const flow = await prisma.workflows.update({

@@ -2,7 +2,7 @@ import { postContentToWebHook } from "@/app/(main)/(pages)/connections/_actions/
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import React, { useCallback } from "react";
-import { onCreateNodeTemplate } from "../../../_actions/workfliw-connections";
+import { onCreateNodeTemplate } from "../../../_actions/workflow-connections";
 import { toast } from "sonner";
 import { onCreateNewPageInDatabase } from "@/app/(main)/(pages)/connections/_actions/notion-connection";
 import { postMessageToSlack } from "@/app/(main)/(pages)/connections/_actions/slack-connection";

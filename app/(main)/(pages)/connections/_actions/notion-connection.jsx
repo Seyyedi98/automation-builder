@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/client";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { Client } from "@notionhq/client";
 
 export const onNotionConnect = async (
