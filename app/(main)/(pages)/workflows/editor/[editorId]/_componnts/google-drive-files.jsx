@@ -1,16 +1,16 @@
 "use client";
 
+import { CardContainer } from "@/app/components/global/3d-card";
+import { Button } from "@/components/ui/button";
+import { Card, CardDescription } from "@/components/ui/card";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { getGoogleListener } from "../../../_actions/workflow-connections";
-import { Card, CardDescription } from "@/components/ui/card";
-import { CardContainer } from "@/app/components/global/3d-card";
-import { Button } from "@/components/ui/button";
 
 const GoogleDriveFiles = () => {
-  const [loading, setLoading] = useState();
-  const [isListening, setIsListening] = useState();
+  const [loading, setLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
 
   // Requst google access
   const reqGoogle = async () => {
@@ -28,7 +28,6 @@ const GoogleDriveFiles = () => {
     if (listener?.googleResourceId !== null) {
       setIsListening(true);
     }
-    setIsListening(false);
   };
 
   useEffect(() => {
