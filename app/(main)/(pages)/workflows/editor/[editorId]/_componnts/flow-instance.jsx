@@ -26,7 +26,7 @@ const FlowInstance = ({ children, edges, nodes }) => {
   }, [nodeConnection]);
 
   const onPublishWorkflow = useCallback(async () => {
-    const response = await onFlowPublish(pathname.split("/").pop(), true);
+    const response = await onFlowPublish(pathName.split("/").pop(), true);
     if (response) toast.message(response);
   }, []);
 

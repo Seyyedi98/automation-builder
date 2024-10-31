@@ -108,8 +108,8 @@ model Connections {
 
 model Workflows {
   id                String   @id @default(uuid())
-  nodes             String?
-  edges             String?
+  nodes             String?  @db.LongText
+  edges             String?  @db.LongText
   name              String
   discordTemplate   String?
   notionTemplate    String?

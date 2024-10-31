@@ -2,6 +2,7 @@ import { postContentToWebHook } from "@/app/(main)/(pages)/connections/_actions/
 import { onCreateNewPageInDatabase } from "@/app/(main)/(pages)/connections/_actions/notion-connection";
 import { postMessageToSlack } from "@/app/(main)/(pages)/connections/_actions/slack-connection";
 import prisma from "@/lib/client";
+import axios from "axios";
 import { headers } from "next/headers";
 
 export async function POST(req) {
@@ -30,6 +31,7 @@ export async function POST(req) {
       if (workflow) {
         workflow.map(async (flow) => {
           const flowPath = JSON.parse(flow.flowPath);
+          console.log(flowPath);
           let current = 0;
           while (current < flowPath.length) {
             if (flowPath[current] == "Discord") {
